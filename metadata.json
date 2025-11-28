@@ -1,0 +1,5 @@
+{
+  "name": "DUT Admissions Assistant (ChatBot)",
+  "description": "An intelligent chatbot interface designed for Da Nang University of Science and Technology (DUT) to assist students with admissions inquiries and general information using Gemini API.",
+  "requestFramePermissions": []
+}
