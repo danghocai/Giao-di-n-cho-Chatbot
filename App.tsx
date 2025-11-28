@@ -117,36 +117,25 @@ const App: React.FC = () => {
   };
 
   const handleReset = () => {
-    const performReset = () => {
-      // 1. Invalidate pending async tasks
-      resetTokenRef.current += 1;
-      
-      // 2. Clear UI state
-      setIsLoading(false);
-      setMessages([]);
-      setInput(''); 
-      
-      // 3. Force Remount of Chat Area to clear any visual artifacts
-      setChatSessionId(prev => prev + 1);
+    // 1. Invalidate pending async tasks immediately
+    resetTokenRef.current += 1;
+    
+    // 2. Clear UI state
+    setIsLoading(false);
+    setMessages([]);
+    setInput(''); 
+    
+    // 3. Force Remount of Chat Area to clear any visual artifacts
+    setChatSessionId(prev => prev + 1);
 
-      // 4. Reset Backend
-      resetChatSession();
-      
-      // 5. UI Polish
-      setIsSidebarOpen(false); 
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    };
-
-    if (messages.length > 0) {
-      if (window.confirm("Bắt đầu cuộc trò chuyện mới? Nội dung hiện tại sẽ bị xóa.")) {
-        performReset();
-      }
-    } else {
-       // If already empty, just ensure everything is clean without confirmation
-       performReset();
-    }
+    // 4. Reset Backend
+    resetChatSession();
+    
+    // 5. UI Polish
+    setIsSidebarOpen(false); 
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
   };
 
   return (
@@ -176,8 +165,9 @@ const App: React.FC = () => {
           </div>
           
           <button 
+            type="button"
             onClick={handleReset}
-            className="flex items-center gap-2 px-3 py-2 text-slate-500 hover:text-dut-blue hover:bg-dut-light rounded-lg transition-all active:scale-95 group"
+            className="flex items-center gap-2 px-3 py-2 text-slate-500 hover:text-dut-blue hover:bg-dut-light rounded-lg transition-all active:scale-95 group z-50 cursor-pointer"
             title="Bắt đầu cuộc trò chuyện mới"
           >
             <span className="hidden sm:inline text-xs font-medium group-hover:text-dut-blue">Cuộc trò chuyện mới</span>
